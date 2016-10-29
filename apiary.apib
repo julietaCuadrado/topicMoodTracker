@@ -1,0 +1,86 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# topicMoodTracker
+
+topicMoodTracker is an API that will allow one single user to set a basic mood per day regarding to a given topic.
+
+
+# Group Topics
+
+Resources related to the topics in the API.
+
+## Topics Collection [/topics]
+
+### List All Topics [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "topic": "How about frying an egg?",
+                "created_at": "2016-10-11T10:38:51.620Z",
+                "url": "/topic/1",
+                "moods": [
+                    {
+                        "mood": "It was really good today",
+                        "url": "/questions/1/moods/1",
+                        "count": 3
+                    }, {
+                        "mood": "No fired eggs today",
+                        "url": "/questions/1/moods/2",
+                        "count": 10
+                    }, {
+                        "mood": "Neither the dog wanted it today"
+                        "url": "/questions/1/moods/3",
+                        "count": 5
+                    }
+                ]
+            }
+        ]
+
+### Create a New Topic [POST]
+
+Create your new topic of interest this action. It takes a JSON
+object containing a topic and also the configuration of your 3 moods.
++ topic (string) - The topic you want to track
++ moods (array[moods]) - A collection to configure the moods to choose daily.
+
++ Request (application/json)
+
+            {
+                "topic": "Have you worked in your arduino car prototype 1?",
+                "choices": [
+                    "positive": "oh yes, oh yes",
+                    "neutral": "yes/no, im analizying next step",
+                    "negative": "who were you and what were arduino, again?"
+                ]
+            }
+
++ Response 201 (application/json)
+    
+    + Headers
+        
+            Location: /topic/2
+    
+    + Body
+    
+                {
+                    "topic": "Have you worked in your arduino car prototype 1?",
+                    "published_at": "2016-11-01T08:40:51.620Z",
+                    "moods": [
+                        {
+                            "mood": "oh yes, oh yes",
+                            "url": "/topics/2/moods/1",
+                            "count": 0
+                        }, {
+                            "mood": "yes/no, im analizying next step",
+                            "url": "/topics/2/moods/2",
+                            "count": 0
+                        }, {
+                            "mood":  "who were you and who were arduino, again?",
+                            "url": "/topics/2/moods/3",
+                            "count": 0
+                        }
+                    ]   
+                }
