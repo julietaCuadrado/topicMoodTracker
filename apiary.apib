@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://xxx/
+HOST: http://private-6b025-topicmoodtracker.apiary-mock.com/
 
 # topicMoodTracker
 
@@ -24,11 +24,11 @@ Resources related to the topics in the API.
                 "moods": [
                     {
                         "mood": "It was really good today",
-                        "url": "/questions/1/moods/1",
+                        "url": "/moods/1",
                         "count": 3
                     }, {
                         "mood": "No fried eggs today",
-                        "url": "/questions/1/moods/2",
+                        "url": "/moods/2",
                         "count": 10
                     }, {
                         "mood": "Neither the dog wanted it today"
@@ -58,13 +58,13 @@ object containing a topic and also the configuration of your 3 moods.
             }
 
 + Response 201 (application/json)
-    
+
     + Headers
-        
+
             Location: /topic/2
-    
+
     + Body
-    
+
                 {
                     "topic": "Have you worked in your arduino car prototype 1?",
                     "published_at": "2016-11-01T08:40:51.620Z",
@@ -82,5 +82,29 @@ object containing a topic and also the configuration of your 3 moods.
                             "url": "/topics/2/moods/3",
                             "count": 0
                         }
-                    ]   
+                    ]
                 }
+
+
+# Group Moods
+
+Resources related to the moods in the API.
+
+## moods Collection [/topic/1/moods]
+
+### List All Moods by Topic [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "mood": "It was really good today",
+                "url": "/moods/1"
+            }, {
+                "mood": "No fried eggs today",
+                "url": "/moods/2"
+            }, {
+                "mood": "Neither the dog wanted it today"
+                "url": "/moods/3"
+            }
+        ]
