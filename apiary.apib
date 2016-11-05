@@ -67,7 +67,7 @@ A Topic object has the following attributes:
 + Parameters
     + topic_id: 1 (required, number) - ID of the Topic in form of an integer
     + mood_id: 1 (required, number) - ID of the Mood in form of an integer
-    + day: An ISO8601 date to track the given mood for the given the topic.
+    + day: An ISO8601 date to track a given mood for a given the topic.
     
 ### Track a Mood [POST]
 
@@ -91,9 +91,18 @@ This action allows you to track one mood for a topic, at a given day.
        
         {
             "mood": "It was really good today",
-            "url": "/moods/1",
+            "url": "topics/1/moods/1",
             "valoration": "positive",
-            "count": 3
+            "count": 3,
+            "days": [
+                {
+                    "tracked_at": "2016-10-21T14:38:51.620Z"
+                }, {
+                    "tracked_at": "2016-11-03T14:48:51.620Z"
+                }, {
+                    "tracked_at": "2016-11-04T13:58:51.620Z"
+                }
+            ]
         }
         
 ## Topics Collection [/topics{?page}]
@@ -134,6 +143,27 @@ This action allows you to track one mood for a topic, at a given day.
                             "count": 5
                         }
                     ]
+                }, {
+                    "topic": "Have you worked in your arduino car prototype 1?",
+                    "created_at": "2016-11-01T08:40:51.620Z",
+                    "moods": [
+                        {
+                            "mood": "oh yes, oh yes",
+                            "url": "topics/1/moods/1",
+                            "valoration": "positive",
+                            "count": 0
+                        }, {
+                            "mood": "yes/no, im analizying next step",
+                            "url": "topics/2/moods/2",
+                            "valoration": "neutral",
+                            "count": 0
+                        }, {
+                            "mood":  "who were you and who were arduino, again?",
+                            "url": "topics/2/moods/3",
+                            "valoration": "negative",
+                            "count": 0
+                        }
+                    ]
                 }
             ]
 
@@ -167,10 +197,11 @@ object containing a topic and also the configuration of your 3 moods.
                 {
                     "topic": "Have you worked in your arduino car prototype 1?",
                     "created_at": "2016-11-01T08:40:51.620Z",
+                    "url": "topics/2",
                     "moods": [
                         {
                             "mood": "oh yes, oh yes",
-                            "url": "topics/1/moods/1",
+                            "url": "topics/2/moods/1",
                             "valoration": "positive",
                             "count": 0
                         }, {
