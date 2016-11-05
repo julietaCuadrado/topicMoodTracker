@@ -54,7 +54,7 @@ A Topic object has the following attributes:
                     "valoration": "neutral",
                     "count": 10
                 }, {
-                    "mood": "Neither the dog wanted it today"
+                    "mood": "Neither the dog wanted it today",
                     "url": "/topics/1/moods/3",
                     "valoration": "negative",
                     "count": 5
@@ -130,17 +130,17 @@ This action allows you to track one mood for a topic, at a given day.
                             "mood": "It was really good today",
                             "url": "/topics/1/moods/1",
                             "valoration": "positive",
-                            "count": 3
+                            "count": "3"
                         }, {
                             "mood": "No fried eggs today",
                             "url": "/topics/1/moods/2",
                             "valoration": "neutral",
-                            "count": 10
+                            "count": "10"
                         }, {
-                            "mood": "Neither the dog wanted it today"
+                            "mood": "Neither the dog wanted it today",
                             "url": "/topics/1/moods/3",
                             "valoration": "negative",
-                            "count": 5
+                            "count": "5"
                         }
                     ]
                 }, {
@@ -180,10 +180,17 @@ object containing a topic and also the configuration of your 3 moods.
 
             {
                 "topic": "Have you worked in your arduino car prototype 1?",
-                "choices": [
-                    "positive": "oh yes, oh yes",
-                    "neutral": "yes/no, im analizying next step",
-                    "negative": "who were you and what were arduino, again?"
+                "moods": [
+                    {
+                        "mood": "oh yes, oh yes",
+                        "valoration": "positive"
+                    }, {
+                        "mood": "yes/no, im analizying next step",
+                        "valoration": "positive"
+                    }, {
+                        "mood": "who were you and what were arduino, again?",
+                        "valoration": "positive"
+                    }
                 ]
             }
 
