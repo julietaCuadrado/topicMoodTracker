@@ -67,7 +67,7 @@ A Topic object has the following attributes:
 + Parameters
     + topic_id: 1 (required, number) - ID of the Topic in form of an integer
     + mood_id: 1 (required, number) - ID of the Mood in form of an integer
-    + day - An ISO8601 date to track the given mood for the given the topic.
+    + day: An ISO8601 date to track the given mood for the given the topic.
     
 ### Track a Mood [POST]
 
@@ -78,6 +78,12 @@ This action allows you to track one mood for a topic, at a given day.
     + Headers
 
             Location: /topics/1
+            
+## Moods [/topics/{topic_id}/moods/{mood_id}]
+
++ Parameters
+    + topic_id: 1 (required, number) - ID of the Topic in form of an integer
+    + mood_id: 1 (required, number) - ID of the Mood in form of an integer            
             
 ### Get the detail for a given mood [GET]
 
