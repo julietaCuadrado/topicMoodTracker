@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" ng-app="angularTracker">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular topic Mood Tracker app</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body ng-controller="mainController">
+<div class="container">
+    <!--Cabecera-->
+    <div class="jumbotron text-center">
+        <h1> Topic Mood Tracker<span class="label label-info"></span></h1>
+        <h6>made with angular.js</h6>
+        <h5>You are tracking {{topics.length}} topics so far</h5>
+    </div>
+    <!--Lista de Todos-->
+    <div id="topic-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="checkbox" ng-repeat="topic in topics">
+                <label>
+                    <input type="checkbox" ng-click="deleteTopic(topic.id)"> {{ topic.topic }}
+                </label>
+            </div>
+        </div>
+    </div>
+    <!--Formulario para insertar nuevos Topics-->
+    <div id="topic-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control input-lg text-center" placeholder="Inserta un topic nuevo" ng-model="formData.text">
+            </div>
+            <button class="btn btn-primary btn-lg" ng-click="createTopic()">Añadir</button>
+        </form>
+    </div>
+</div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> <script src="main.js"></script>
+</body>
+</html>
