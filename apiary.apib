@@ -152,6 +152,7 @@ A Topic object has the following attributes:
 ### Get the detail for a given Topic [GET]
 
 + Response 200 (application/json)
+
         {
             "id": 1
             "topic": "How about frying something?",
@@ -230,9 +231,11 @@ A Topic object has the following attributes:
 This action allows you to track one mood for a topic, at a given day.
 
 + Request
+
         {
             day: "2016-10-21T14:38:51.620Z"
         }
+
 + Response 201
 
     + Headers
