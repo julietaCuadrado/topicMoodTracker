@@ -1,37 +1,83 @@
-var api_root = "http://localhost:3000";
-angular.module('angularTracker', []);
+ angular
+    .module('angularTracker',['$scope', 'ngRoute', 'dataService'],
+        function ($scope, dataService) {
 
-function mainController($scope, $http) {
-    $scope.formData = {};
+            $scope.topics;
 
-    $http.get(api_root + '/topics')
-        .success(function(data) {
-            console.log(data);
-            $scope.topics = data;
+            getTopics();
+
+            function getTopics() {
+                dataService.getTopics()
+                    .then(function (response) {
+                        $scope.topics = response.data;
+                        $scope.moods = response.data.moods;
+                    }, function (error) {
+                        $scope.status = 'Unable to load Topic data: ' + error.message;
+                    });
+            }
         })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/topic', {
+                controller: 'topicController',
+                templateUrl: 'topic.html'
+            }
+        )
+            .otherwise({ redirectTo: '/' });
+    }])
+    .service('dataService', ['$http', function ($http) {
 
-    $scope.createTopic = function(){
-        $http.post('/topics', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {};
-                $scope.topics = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error:' + data);
-            });
-    };
+        var urlBase = 'http://localhost:3000/topics';
 
-    $scope.deleteTopic = function(id) {
-        $http.delete('/topics/' + id)
-            .success(function(data) {
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error:' + data);
-            });
-    };
-}
+        this.getTopics = function () {
+            return $http.get(urlBase);
+        };
+
+        this.getTopic = function (id) {
+            return $http.get(urlBase + '/' + id);
+        };
+
+        this.insertTopic = function (topic) {
+            return $http.post(urlBase, topic);
+        };
+
+        this.updateTopic = function (topic) {
+            return $http.put(urlBase + '/' + topic.ID, topic)
+        };
+
+        this.deleteTopic = function (id) {
+            return $http.delete(urlBase + '/' + id);
+        };
+
+    }])
+    .controller('mainController', ['$scope', 'dataService'],
+        function ($scope, dataService) {
+            $scope.updateTopic = function (id) {
+                dataService.updateTopic(id)
+                    .then(function (response) {
+                        $scope.status = 'Updated Topic! Refreshing Topic list.';
+                    }, function (error) {
+                        $scope.status = 'Unable to update Topic: ' + error.message;
+                    });
+            };
+
+            $scope.insertTopic = function () {
+                dataService.CreateTopic()
+                    .then(function (response) {
+                        $scope.status = 'Inserted Topic! Refreshing Topic list.';
+                        $scope.topics.push(topic);
+                    }, function(error) {
+                        $scope.status = 'Unable to insert Topic: ' + error.message;
+                    });
+            };
+
+            $scope.deleteTopic = function (id) {
+                dataService.deleteTopic(id)
+                    .then(function (response) {
+                        $scope.status = 'Deleted Topic! Refreshing Topic list.';
+                    }, function (error) {
+                        $scope.status = 'Unable to delete Topic: ' + error.message;
+                    });
+            };
+
+        }
+    );
