@@ -1,29 +1,14 @@
  angular
-    .module('angularTracker',['$scope', 'ngRoute', 'dataService'],
-        function ($scope, dataService) {
+    .module('angularTracker', ['ngRoute'])
+     .config(['$routeProvider', function ($routeProvider) {
 
-            $scope.topics;
+         $routeProvider.when('/', {
+                 controller: 'topicsController',
+                 templateUrl: '/index.html'
+             })
+             .otherwise({ redirectTo: '/' });
 
-            getTopics();
-
-            function getTopics() {
-                dataService.getTopics()
-                    .then(function (response) {
-                        $scope.topics = response.data;
-                        $scope.moods = response.data.moods;
-                    }, function (error) {
-                        $scope.status = 'Unable to load Topic data: ' + error.message;
-                    });
-            }
-        })
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/topic', {
-                controller: 'topicController',
-                templateUrl: 'topic.html'
-            }
-        )
-            .otherwise({ redirectTo: '/' });
-    }])
+     }])
     .service('dataService', ['$http', function ($http) {
 
         var urlBase = 'http://localhost:3000/topics';
@@ -49,8 +34,22 @@
         };
 
     }])
-    .controller('mainController', ['$scope', 'dataService'],
-        function ($scope, dataService) {
+    .controller('topicController',
+        function ( $scope, dataService) {
+
+            $scope.topics;
+            getTopics();
+
+            function getTopics() {
+                dataService.getTopics()
+                    .then(function (response) {
+                        $scope.topics = response.data;
+
+                    }, function (error) {
+                        $scope.status = 'Unable to load Topic data: ' + error.message;
+                    });
+            };
+
             $scope.updateTopic = function (id) {
                 dataService.updateTopic(id)
                     .then(function (response) {
